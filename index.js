@@ -382,9 +382,9 @@ function initialize() {
   selectLanguage.onchange = function() {
     cbSelectChange.call(selectLanguage, 'language');
   };
-  selectRegion.onchange = function() {
-    cbSelectChange.call(selectRegion, 'region');
-  };
+//   selectRegion.onchange = function() {
+//     cbSelectChange.call(selectRegion, 'region');
+//   };
 }
 
 let map;
