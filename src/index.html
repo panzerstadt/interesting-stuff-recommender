@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <title>Localizing the Map</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <meta charset="utf-8">
+
+    <style type="text/css">
+        html,
+        body,
+        #map-canvas {
+          color: #585858;
+          font-family: Roboto, sans-serif;
+          height: 100%;
+          padding: 0;
+          margin: 0;
+        }
+        #directions-box{
+         float: bottom;
+         height: 8%;
+         margin-top: .9em;
+         overflow: auto;
+         width: 100%;
+        }
+        #geocoding-error,
+        #directions-error {
+          color: red;
+          display: none;
+          font-size: 1.5em;
+          font-weight: 700;
+          height: 2em;
+          padding: 1em;
+          width: 100%;
+        }
+        #directions-error {
+          text-align: right;
+        }
+        #map-canvas {
+          /* float: top; */
+          height: 100%;
+          width: 100%;
+        }
+        #region {
+          margin-top: .5em;
+        }
+        select {
+          font-size: 1em;
+          width: 100px;
+        }
+        #selection-div {
+          display: inline;
+        }
+        #selection-box {
+          background-color: white;
+          background-clip: padding-box;
+          box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 4px -1px;
+          border-radius: 2.5px;
+          display: none;
+          font-size: 1.1em;
+          left: 0px;
+          margin: 1em;
+          max-height: 200px;
+          max-width: 390px;
+          overflow: auto;
+          padding: .8em;
+          position: absolute;
+          top: 0px;
+          -webkit-user-select: none;
+          -webkit-background-clip: padding-box;
+          z-index: 999;
+        }
+        .select-label {
+          display: inline-block;
+          color: #333;
+          font-size: 1em;
+          width: 60px;
+        }
+
+    </style>
+
+    <!-- <script src="localization.js"></script> -->
+    <link rel="manifest" href="manifest.json">
+
+    <!-- this ios version meta tag thing might be depreciated -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="white">
+    <meta name="apple-mobile-web-app-title" content="Findly">
+    <!-- apple specific sizes -->
+    <link rel="apple-touch-icon" href="/images/icons/arrow57.png" sizes="57x57">
+    <link rel="apple-touch-icon" href="/images/icons/arrow72.png" sizes="72x72">
+    <link rel="apple-touch-icon" href="/images/icons/arrow76.png" sizes="76x76">
+    <link rel="apple-touch-icon" href="/images/icons/arrow120.png" sizes="120x120">
+    <link rel="apple-touch-icon" href="/images/icons/arrow144.png" sizes="144x144">
+    <link rel="apple-touch-icon" href="/images/icons/arrow152.png" sizes="152x152">
+    <link rel="apple-touch-icon" href="/images/icons/arrow192.png" sizes="192x192">
+
+    <!-- internet explorer setting for purposes of more happiness -->
+    <meta name="msapplication-TileImage" content="/images/icons/arrow144.png">
+    <meta name="msapplication-TileColor" content="#fff">
+
+    <!-- final backup -->
+    <meta name="theme-color" content="#fff">
+  </head>
+
+
+  <body onload=initialize()>
+      <div id="geocoding-error">test geocoding</div>
+      <div id="directions-error">test directions</div>
+      <div id="selection-box">
+          <div id="selection-div">
+              <div>
+                  <label class="select-label" for="language">Language</label>
+                  <select id="language"></select>
+              </div>
+          <!-- <div>
+              <label class="select-label" for="region">Region</label>
+              <select id="region"></select>
+          </div> -->
+          </div>
+      </div>
+      <div id="map-canvas"></div>
+      <script src="https://www.gstatic.com/firebasejs/4.13.0/firebase.js"></script>
+      <script>
+      // Initialize Firebase
+      var config = {
+          apiKey: "AIzaSyDBL8xo93nrkh2saNR2b8IVua5Gprh3K4s",
+          authDomain: "findly-a3cf4.firebaseapp.com",
+          databaseURL: "https://findly-a3cf4.firebaseio.com",
+          projectId: "findly-a3cf4",
+          storageBucket: "findly-a3cf4.appspot.com",
+          messagingSenderId: "890978572594"
+      };
+      firebase.initializeApp(config);
+      </script>
+      <script>
+          if('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js')
+              .then(function() {
+                    console.log('Service Worker Registered');
+              });
+          }
+        </script>
+        <script src="index.js"></script>
+  </body>
+
+</html>

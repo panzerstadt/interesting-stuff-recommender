@@ -382,13 +382,15 @@ function initialize() {
   selectLanguage.onchange = function() {
     cbSelectChange.call(selectLanguage, 'language');
   };
-  selectRegion.onchange = function() {
-    cbSelectChange.call(selectRegion, 'region');
-  };
+//   selectRegion.onchange = function() {
+//     cbSelectChange.call(selectRegion, 'region');
+//   };
 }
 
 let map;
 let infoWindow;
+
+
 
 // The callback for Maps JS API request.
 function mapsLoaded() {
@@ -407,6 +409,14 @@ function mapsLoaded() {
   });
 
   directionsDisplay.setMap(map);
+
+  // Add selection box to map controls.
+  // this is the language selector bit
+  var control = document.getElementById('selection-box');
+  map.controls[google.maps.ControlPosition.TOP_LEFT].push(control);
+  google.maps.event.addListenerOnce(map, 'tilesloaded', function(e) {
+    control.style.display = 'block';
+  });
 
       // Try HTML5 geolocation.
   if (navigator.geolocation) {
@@ -428,6 +438,7 @@ function mapsLoaded() {
     service.nearbySearch({
       location: pos,
       radius: 1000,
+      openNow: true,
     }, callback);
 
     function callback(results, status) {
@@ -503,79 +514,8 @@ function mapsLoaded() {
                         'Error: Your browser doesn\'t support geolocation.');
   infoWindow.open(map);
   }
-
-
-
-
-
-
-  // Add selection box to map controls.
-  var control = document.getElementById('selection-box');
-  map.controls[google.maps.ControlPosition.TOP_LEFT].push(control);
-  // Due to the time between when the map is loaded and the control div is
-  // added to the page it creates a jarring effect. This is a best effort
-  // to minimize that.
-  google.maps.event.addListenerOnce(map, 'tilesloaded', function(e) {
-    control.style.display = 'block';
-  });
-  google.maps.event.addListener(map, 'click', function(e) {
-    geocoder.geocode({'latLng': e.latLng}, function(results, status) {
-      var message = '';
-      var errorDiv = document.getElementById('geocoding-error');
-      if (status !== 'OK') {
-        message = 'Geocoder failed. Please, try your request again.';
-        errorDiv.innerText = message;
-        errorDiv.style.display = 'block';
-        return;
-      }
-      if (!results[0]) {
-        message =
-            'Geocoding found zero results. Please, try a different location.';
-        errorDiv.innerText = message;
-        errorDiv.style.display = 'block';
-        return;
-      }
-      var marker = new google.maps.Marker({
-        position: e.latLng,
-        map: map,
-      });
-      infoWindow.setContent(results[0].formatted_address);
-      infoWindow.open(map, marker);
-    });
-  });
-  showDirections();
 }
 
-function showDirections() {
-  // Remove directions list to prevent multiple directions listings.
-  var directionsDisplay = new google.maps.DirectionsRenderer({
-    map: map,
-    preserveViewport: true,
-    draggable: true,
-  });
-  directionsDisplay.setPanel(document.getElementById('directions-box'));
-  var sampleRequest = {
-    origin: 'Warsaw, Poland',
-    destination: 'Berlin, Germany',
-    travelMode: google.maps.TravelMode.DRIVING,
-    unitSystem: google.maps.UnitSystem.METRIC,
-  };
-  var directionsService = new google.maps.DirectionsService();
-  directionsService.route(sampleRequest, function(response, status) {
-    var message = '';
-    var errorDiv;
-    if (status === 'OK') {
-      directionsDisplay.setDirections(response);
-    } else {
-      message =
-          'Something went wrong getting directions. ' +
-          'Please, try your request again.';
-      errorDiv = document.getElementById('directions-error');
-      errorDiv.innerText = message;
-      errorDiv.style.display = 'block';
-    }
-  });
-}
 
 // Utility to grab a parameter values.
 function getUrlParameter(name) {
@@ -593,4 +533,26 @@ function replaceUrlParameter(key, value) {
   var newTerm = key + '=' + value;
   return location.search.replace(term, newTerm);
 }
+
+
+
+// Build the JS API request node.
+var script = document.createElement('script');
+var query = '?key=AIzaSyBKvzTkXLExmLwiU8ZY4MaS522McemciA4&libraries=places&callback=mapsLoaded';
+var langCode = getUrlParameter('language');
+// Try to be generous with accepting upper/lower case.
+if (langCode.length === 2) {
+langCode = langCode.toLowerCase();
+}
+if (langCode) {
+query += '&language=' + langCode;
+}
+var regionCode = getUrlParameter('region').toUpperCase();
+if (regionCode) {
+query += '&region=' + regionCode;
+}
+script.src = 'https://maps.googleapis.com/maps/api/js' + query;
+script.setAttribute('async', '');
+script.setAttribute('defer', '');
+document.head.appendChild(script);
 

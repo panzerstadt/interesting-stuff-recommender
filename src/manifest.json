@@ -1,0 +1,57 @@
+{
+  "name": "Findly",
+  "short_name": "Findly",
+  "description": "Find nearby places and see how far they are!.",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#fff",
+  "theme_color": "#fff",
+  "icons": [{
+    "src": "/images/icons/arrow57.png",
+    "type": "image/png",
+    "sizes": "57x57"
+    },
+    {
+    "src": "/images/icons/arrow72.png",
+    "type": "image/png",
+    "sizes": "72x72"
+    },
+    {
+    "src": "/images/icons/arrow76.png",
+    "type": "image/png",
+    "sizes": "76x76"
+    },
+    {
+      "src": "/images/icons/arrow120.png",
+      "type": "image/png",
+      "sizes": "120x120"
+    },
+    {
+      "src": "/images/icons/arrow144.png",
+      "type": "image/png",
+      "sizes": "144x144"
+    },
+    {
+      "src": "/images/icons/arrow152.png",
+      "type": "image/png",
+      "sizes": "152x152"
+    },
+    {
+      "src": "/images/icons/arrow192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/images/icons/arrow512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }],
+  "author": {
+    "name": "Tang Li Qun",
+    "website": "https://liquntang.wordpress.com",
+    "github": "https://github.com/panzerstadt",
+    "source-repo": "https://github.com/panzerstadt/interesting-stuff-recommender"
+  },
+  "gcm_sender_id": "103953800507"
+}
