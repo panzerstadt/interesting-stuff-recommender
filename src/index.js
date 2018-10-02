@@ -1,60 +1,60 @@
 // List of supported languages - Pulled February 8, 2018
 // https://developers.google.com/maps/faq#languagesupport
 var FULL_SUPPORTED_LANGUAGES = {
-    'ar': 'ARABIC',
-    'eu': 'BASQUE',
-    'bg': 'BULGARIAN',
-    'bn': 'BENGALI',
-    'ca': 'CATALAN',
-    'cs': 'CZECH',
-    'da': 'DANISH',
-    'de': 'GERMAN',
-    'el': 'GREEK',
-    'en': 'ENGLISH',
-    'en-AU': 'ENGLISH (AUSTRALIAN)',
-    'en-GB': 'ENGLISH (GREAT BRITAIN)',
-    'es': 'SPANISH',
-    'eu': 'BASQUE',
-    'fa': 'FARSI',
-    'fi': 'FINNISH',
-    'fil': 'FILIPINO',
-    'fr': 'FRENCH',
-    'gl': 'GALICIAN',
-    'gu': 'GUJARATI',
-    'hi': 'HINDI',
-    'hr': 'CROATIAN',
-    'hu': 'HUNGARIAN',
-    'id': 'INDONESIAN',
-    'it': 'ITALIAN',
-    'iw': 'HEBREW',
-    'ja': 'JAPANESE',
-    'kn': 'KANNADA',
-    'ko': 'KOREAN',
-    'lt': 'LITHUANIAN',
-    'lv': 'LATVIAN',
-    'ml': 'MALAYALAM',
-    'mr': 'MARATHI',
-    'nl': 'DUTCH',
-    'no': 'NORWEGIAN',
-    'pl': 'POLISH',
-    'pt': 'PORTUGUESE',
-    'pt-BR': 'PORTUGUESE (BRAZIL)',
-    'pt-PT': 'PORTUGUESE (PORTUGAL)',
-    'ro': 'ROMANIAN',
-    'ru': 'RUSSIAN',
-    'sk': 'SLOVAK',
-    'sl': 'SLOVENIAN',
-    'sr': 'SERBIAN',
-    'sv': 'SWEDISH',
-    'tl': 'TAGALOG',
-    'ta': 'TAMIL',
-    'te': 'TELUGU',
-    'th': 'THAI',
-    'tr': 'TURKISH',
-    'uk': 'UKRAINIAN',
-    'vi': 'VIETNAMESE',
-    'zh-CN': 'CHINESE (SIMPLIFIED)',
-    'zh-TW': 'CHINESE (TRADITIONAL)',
+  ar: "ARABIC",
+  eu: "BASQUE",
+  bg: "BULGARIAN",
+  bn: "BENGALI",
+  ca: "CATALAN",
+  cs: "CZECH",
+  da: "DANISH",
+  de: "GERMAN",
+  el: "GREEK",
+  en: "ENGLISH",
+  "en-AU": "ENGLISH (AUSTRALIAN)",
+  "en-GB": "ENGLISH (GREAT BRITAIN)",
+  es: "SPANISH",
+  eu: "BASQUE",
+  fa: "FARSI",
+  fi: "FINNISH",
+  fil: "FILIPINO",
+  fr: "FRENCH",
+  gl: "GALICIAN",
+  gu: "GUJARATI",
+  hi: "HINDI",
+  hr: "CROATIAN",
+  hu: "HUNGARIAN",
+  id: "INDONESIAN",
+  it: "ITALIAN",
+  iw: "HEBREW",
+  ja: "JAPANESE",
+  kn: "KANNADA",
+  ko: "KOREAN",
+  lt: "LITHUANIAN",
+  lv: "LATVIAN",
+  ml: "MALAYALAM",
+  mr: "MARATHI",
+  nl: "DUTCH",
+  no: "NORWEGIAN",
+  pl: "POLISH",
+  pt: "PORTUGUESE",
+  "pt-BR": "PORTUGUESE (BRAZIL)",
+  "pt-PT": "PORTUGUESE (PORTUGAL)",
+  ro: "ROMANIAN",
+  ru: "RUSSIAN",
+  sk: "SLOVAK",
+  sl: "SLOVENIAN",
+  sr: "SERBIAN",
+  sv: "SWEDISH",
+  tl: "TAGALOG",
+  ta: "TAMIL",
+  te: "TELUGU",
+  th: "THAI",
+  tr: "TURKISH",
+  uk: "UKRAINIAN",
+  vi: "VIETNAMESE",
+  "zh-CN": "CHINESE (SIMPLIFIED)",
+  "zh-TW": "CHINESE (TRADITIONAL)"
 };
 // ISO 3166-1 alpha-2 codes - Pulled February 8, 2018
 // https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
@@ -307,48 +307,45 @@ var REGIONS = {
   EH: "Western Sahara",
   YE: "Yemen",
   ZM: "Zambia",
-  ZW: "Zimbabwe",
+  ZW: "Zimbabwe"
 };
 
 var SUPPORTED_LANGUAGES = {
-  'en': 'ENGLISH',
-  'ja': 'JAPANESE',
-  'zh-CN': 'CHINESE (SIMPLIFIED)',
-  'zh-TW': 'CHINESE (TRADITIONAL)',
+  en: "ENGLISH",
+  ja: "JAPANESE",
+  "zh-CN": "CHINESE (SIMPLIFIED)",
+  "zh-TW": "CHINESE (TRADITIONAL)"
 };
-
-
 
 // The language/region dropdown listener.
 function cbSelectChange(type) {
-  if (type !== 'language' && type !== 'region') return;
+  if (type !== "language" && type !== "region") return;
   var code = this.options[this.selectedIndex].value;
   if (!code) return;
-  var querystring = '';
+  var querystring = "";
   if (getUrlParameter(type)) {
     location.search = replaceUrlParameter(type, code);
   } else {
     if (!location.search) {
-      querystring = '?' + type + '=' + code;
+      querystring = "?" + type + "=" + code;
     } else {
-      querystring = location.search + '&' + type + '=' + code;
+      querystring = location.search + "&" + type + "=" + code;
     }
     location.href = location.origin + location.pathname + querystring;
   }
 }
 
 function initialize() {
-  var langCode = getUrlParameter('language');
+  var langCode = getUrlParameter("language");
   // Try to be generous with accepting upper/lower case.
   if (langCode.length === 2) {
     langCode = langCode.toLowerCase();
   }
-  var regionCode = getUrlParameter('region').toUpperCase();
+  var regionCode = getUrlParameter("region").toUpperCase();
 
   // Populate the language dropdown.
-  var selectLanguage = document.getElementById('language');
-  selectLanguage.options[0] =
-      new Option('language', '', true, true);
+  var selectLanguage = document.getElementById("language");
+  selectLanguage.options[0] = new Option("language", "", true, true);
 
   var fragment = document.createDocumentFragment();
   var language;
@@ -380,179 +377,189 @@ function initialize() {
 
   // Set dropdown listeners.
   selectLanguage.onchange = function() {
-    cbSelectChange.call(selectLanguage, 'language');
+    cbSelectChange.call(selectLanguage, "language");
   };
-//   selectRegion.onchange = function() {
-//     cbSelectChange.call(selectRegion, 'region');
-//   };
+  //   selectRegion.onchange = function() {
+  //     cbSelectChange.call(selectRegion, 'region');
+  //   };
 }
 
 let map;
 let infoWindow;
 
-
-
 // The callback for Maps JS API request.
 function mapsLoaded() {
-  var directionsService = new google.maps.DirectionsService;
-  var directionsDisplay = new google.maps.DirectionsRenderer;
+  var directionsService = new google.maps.DirectionsService();
+  var directionsDisplay = new google.maps.DirectionsRenderer();
   var geocoder = new google.maps.Geocoder();
   infoWindow = new google.maps.InfoWindow();
-  map = new google.maps.Map(document.getElementById('map-canvas'), {
-      zoom: 16,
-      center: {lat: 34.678395, lng: 135.4601304},
-      mapTypeId: google.maps.MapTypeId.ROADMAP,
-      mapTypeControlOptions: {
-        style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
-        position: google.maps.ControlPosition.TOP_RIGHT,
-      },
+  map = new google.maps.Map(document.getElementById("map-canvas"), {
+    zoom: 16,
+    center: { lat: 34.678395, lng: 135.4601304 },
+    mapTypeId: google.maps.MapTypeId.ROADMAP,
+    mapTypeControlOptions: {
+      style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+      position: google.maps.ControlPosition.TOP_RIGHT
+    }
   });
 
   directionsDisplay.setMap(map);
 
   // Add selection box to map controls.
   // this is the language selector bit
-  var control = document.getElementById('selection-box');
+  var control = document.getElementById("selection-box");
   map.controls[google.maps.ControlPosition.TOP_LEFT].push(control);
-  google.maps.event.addListenerOnce(map, 'tilesloaded', function(e) {
-    control.style.display = 'block';
+  google.maps.event.addListenerOnce(map, "tilesloaded", function(e) {
+    control.style.display = "block";
   });
 
-      // Try HTML5 geolocation.
+  // Try HTML5 geolocation.
   if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(function(position) {
-    var pos = {
-        lat: position.coords.latitude,
-        lng: position.coords.longitude
-    };
+    navigator.geolocation.getCurrentPosition(
+      function(position) {
+        var pos = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        };
 
-    // set center of map
-    infoWindow.setPosition(pos);
-    infoWindow.setContent('You are Here!');
-    infoWindow.open(map);
-    map.setCenter(pos);
+        // set center of map
+        infoWindow.setPosition(pos);
+        infoWindow.setContent("You are Here!");
+        infoWindow.open(map);
+        map.setCenter(pos);
 
-    // do places search
-    // pos has the updated latitude and longitude
-    let service = new google.maps.places.PlacesService(map);
-    service.nearbySearch({
-      location: pos,
-      radius: 1000,
-      openNow: true,
-    }, callback);
+        // do places search
+        // pos has the updated latitude and longitude
+        let service = new google.maps.places.PlacesService(map);
+        service.nearbySearch(
+          {
+            location: pos,
+            radius: 1000,
+            openNow: true
+          },
+          callback
+        );
 
-    function callback(results, status) {
-      if (status === google.maps.places.PlacesServiceStatus.OK) {
-        for (var i = 0; i < results.length; i++) {
-          createMarker(results[i]);
-        }
-      }
-      else {
-        window.alert(status);
-        window.alert(results);
-      }
-    }
-    
-    function createMarker(place) {
-      var placeLoc = place.geometry.location;
-      var marker = new google.maps.Marker({
-        map: map,
-        position: place.geometry.location
-      });
-    
-      google.maps.event.addListener(marker, 'click', function() {
-        infoWindow.setContent(place.name);
-        infoWindow.open(map, this);
-        calculateAndDisplayRoute(directionsService, directionsDisplay);
-      });
-    
-      function calculateAndDisplayRoute(directionsService, directionsDisplay) {
-          directionsService.route({
-          origin: pos,
-          destination: place.geometry.location,
-          travelMode: 'WALKING'
-          }, function(response, status) {
-          if (status === 'OK') {
-              directionsDisplay.setDirections(response);
-              var distance = 0;
-              var duration = 0;
-              for(i = 0; i < response.routes[0].legs.length; i++){
-                 distance += parseFloat(response.routes[0].legs[i].distance.value);
-                 duration += parseFloat(response.routes[0].legs[i].duration.value);
-                     //for each 'leg'(route between two waypoints) we get the distance and add it to the total
-              }   
-              //console.log(distance + 'meters');
-              //console.log(duration + 'seconds');
-              //console.log((duration/60.0).toFixed(2) + 'minutes');
-
-              var minutes_left = (duration/60.0).toFixed(2);
-              infoWindow.setContent(place.name + " : " + minutes_left + "min");
-              
-
+        function callback(results, status) {
+          if (status === google.maps.places.PlacesServiceStatus.OK) {
+            for (var i = 0; i < results.length; i++) {
+              createMarker(results[i]);
+            }
           } else {
-              window.alert('Directions request failed due to ' + status);
+            window.alert(status);
+            window.alert(results);
           }
+        }
+
+        function createMarker(place) {
+          var placeLoc = place.geometry.location;
+          var marker = new google.maps.Marker({
+            map: map,
+            position: place.geometry.location
           });
+
+          google.maps.event.addListener(marker, "click", function() {
+            infoWindow.setContent(place.name);
+            infoWindow.open(map, this);
+            calculateAndDisplayRoute(directionsService, directionsDisplay);
+          });
+
+          function calculateAndDisplayRoute(
+            directionsService,
+            directionsDisplay
+          ) {
+            directionsService.route(
+              {
+                origin: pos,
+                destination: place.geometry.location,
+                travelMode: "WALKING"
+              },
+              function(response, status) {
+                if (status === "OK") {
+                  directionsDisplay.setDirections(response);
+                  var distance = 0;
+                  var duration = 0;
+                  for (i = 0; i < response.routes[0].legs.length; i++) {
+                    distance += parseFloat(
+                      response.routes[0].legs[i].distance.value
+                    );
+                    duration += parseFloat(
+                      response.routes[0].legs[i].duration.value
+                    );
+                    //for each 'leg'(route between two waypoints) we get the distance and add it to the total
+                  }
+                  //console.log(distance + 'meters');
+                  //console.log(duration + 'seconds');
+                  //console.log((duration/60.0).toFixed(2) + 'minutes');
+
+                  var minutes_left = (duration / 60.0).toFixed(2);
+                  infoWindow.setContent(
+                    place.name + " : " + minutes_left + "min"
+                  );
+                } else {
+                  window.alert("Directions request failed due to " + status);
+                }
+              }
+            );
+          }
+        }
+
+        // PROBABLY ALL CODE SHOULD BE INSIDE HERE
+      },
+      function() {
+        handleLocationError(true, infoWindow, map.getCenter());
       }
-    }
-
-
-
-    // PROBABLY ALL CODE SHOULD BE INSIDE HERE
-    }, function() {
-    handleLocationError(true, infoWindow, map.getCenter());
-    });
+    );
   } else {
     // Browser doesn't support Geolocation
     handleLocationError(false, infoWindow, map.getCenter());
   }
 
   function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-  infoWindow.setPosition(pos);
-  infoWindow.setContent(browserHasGeolocation ?
-                        'Error: The Geolocation service failed.' :
-                        'Error: Your browser doesn\'t support geolocation.');
-  infoWindow.open(map);
+    infoWindow.setPosition(pos);
+    infoWindow.setContent(
+      browserHasGeolocation
+        ? "Error: The Geolocation service failed."
+        : "Error: Your browser doesn't support geolocation."
+    );
+    infoWindow.open(map);
   }
 }
 
-
 // Utility to grab a parameter values.
 function getUrlParameter(name) {
-  name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
-  var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+  name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+  var regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
   var results = regex.exec(location.search);
-  return results === null ?
-      '' :
-      decodeURIComponent(results[1].replace(/\+/g, ' '));
+  return results === null
+    ? ""
+    : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 // Utility to change a parameter value.
 function replaceUrlParameter(key, value) {
   var oldValue = getUrlParameter(key);
-  var term = key + '=' + oldValue;
-  var newTerm = key + '=' + value;
+  var term = key + "=" + oldValue;
+  var newTerm = key + "=" + value;
   return location.search.replace(term, newTerm);
 }
 
-
-
 // Build the JS API request node.
-var script = document.createElement('script');
-var query = '?key=AIzaSyBKvzTkXLExmLwiU8ZY4MaS522McemciA4&libraries=places&callback=mapsLoaded';
-var langCode = getUrlParameter('language');
+var script = document.createElement("script");
+var query =
+  "?key=AIzaSyAEar0x5FP9Nv-hQ-kA-RsIrChyVbb8tK4&libraries=places&callback=mapsLoaded";
+var langCode = getUrlParameter("language");
 // Try to be generous with accepting upper/lower case.
 if (langCode.length === 2) {
-langCode = langCode.toLowerCase();
+  langCode = langCode.toLowerCase();
 }
 if (langCode) {
-query += '&language=' + langCode;
+  query += "&language=" + langCode;
 }
-var regionCode = getUrlParameter('region').toUpperCase();
+var regionCode = getUrlParameter("region").toUpperCase();
 if (regionCode) {
-query += '&region=' + regionCode;
+  query += "&region=" + regionCode;
 }
-script.src = 'https://maps.googleapis.com/maps/api/js' + query;
-script.setAttribute('async', '');
-script.setAttribute('defer', '');
+script.src = "https://maps.googleapis.com/maps/api/js" + query;
+script.setAttribute("async", "");
+script.setAttribute("defer", "");
 document.head.appendChild(script);
-
